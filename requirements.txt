@@ -3,4 +3,3 @@ pandas
 plotly
 holidays
 reportlab
-passlib[bcrypt]
