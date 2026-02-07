@@ -67,15 +67,20 @@ with tabs[1]:
             ultimo=esc
             escala.append([data.strftime("%d/%m/%Y"), tipo, esc])
 
+        st.session_state["estatisticas"] = cont
+
         df = pd.DataFrame(escala, columns=["Data","Tipo","Militar"])
         st.dataframe(df, use_container_width=True)
 
 # ---------- TAB 3 ----------
 with tabs[2]:
-    st.info("Histórico pronto para expansão anual")
+    st.info("Histórico pronto para próxima versão")
 
 # ---------- TAB 4 ----------
 with tabs[3]:
-    s = pd.Series(cont).reset_index()
-    s.columns=["Militar","Qtd"]
-    st.plotly_chart(px.bar(s, x="Militar", y="Qtd"), use_container_width=True)
+    if "estatisticas" not in st.session_state:
+        st.info("Gere uma escala para ver estatísticas.")
+    else:
+        s = pd.Series(st.session_state["estatisticas"]).reset_index()
+        s.columns=["Militar","Qtd"]
+        st.plotly_chart(px.bar(s, x="Militar", y="Qtd"), use_container_width=True)
